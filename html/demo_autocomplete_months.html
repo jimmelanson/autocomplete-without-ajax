@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>JavaScript Demo: AutoComplete Form Field - Months</title>
+  <link rel="stylesheet" type="text/css" href="https://www.jimmelanson.ca/cgi-bin/programming/examples/cgi_delivery/deliver_css.cgi?file=flexbox">
+  <link rel="stylesheet" type="text/css" href="https://www.jimmelanson.ca/cgi-bin/programming/examples/cgi_delivery/deliver_css.cgi?file=admin">
+  <script language="JavaScript" src="autocomplete.js"></script>
+  <script language="JavaScript">
+  <!-- //Romulan Cloaking Device
+var myArray = new Array('January','February','Bitchin and Luvin','March','April','May','June','July','August','September','October','November','December');
+var themonth = new autocomplete();
+themonth.ignoreCase();
+themonth.addArray(myArray);
+themonth.addWord('Bee bop a loo la');
+function removeword(elementID) {
+  if(document.getElementById(elementID).value) {
+    themonth.removeWord(document.getElementById(elementID).value);
+    document.getElementById(elementID).value = '';
+    window.alert(themonth.list());
+  }
+}
+
+var arrKlingonHotties = new Array("Azetbur - Chancellor & Daughter of Gorkon","B'Elanna Torres - Engineer, ST: Voyager","B'Etor - Younger sister, House of Duras","Ba'el - Daughter of Gi'ral and Romulan camp commandant Tokath","Grilka - Quark's mate","K'ehleyr - Klingon Emissary, Worf's mate","Kurak - Warp field expert","L'Rell - Follower of T'Kuvma in DIS","Lursa - Older sister, House of Duras","Mara - Kang's mate and science officer, Original Series","Sirella - Martok's wife","Valkris - Kruge's mate, obtained Genesis data","Vekma - Warrior stationed aboard the Pagh","Vixis - Capt. Klaa's first officer");
+var klingonFemales = new autocomplete();
+klingonFemales.ignoreCase();
+klingonFemales.addArray(arrKlingonHotties);
+
+
+
+  //-->
+  </script>
+</head>
+<body>
+<div class="main-page">
+  <header>
+    <div class="header-container">
+      <label class="item-title">
+        JavaScript AutoComplete Months
+      </label>
+      <label class="item-user">
+        from Ninja Kitty
+      </label>
+    </div>
+  </header>
+  <br /><br /><br /><br /><br /><br />
+  <div class="indexpage-container1">
+    <div class="indexpage-container1-stuff">
+      <div style="width:500px;">
+        <br /><br /><br />
+        <form name="testFrm">
+          <span style="font-weight: bold;">Month Names</span><br />
+          <input type="text" name="month" id="month" value="" size="50" maxlength="256" onkeyup="return themonth.complete(this, event);">&nbsp;&nbsp;<input type="button" value="Remove" onClick="removeword('month')">
+          <br /><br /><br />
+          <span style="font-weight: bold;">Favourite Klingon Female</span><br />
+          <input type="text" name="klingonhottie" id="klingonhottie" value="" size="50" maxlength="256" onkeyup="return klingonFemales.complete(this, event);">
+        </form>
+      </div>
+    </div>
+  </div>
+  <br /><br /><br /><br />
+  <div class="footer-container">
+      <label class="footer-normal">&copy; 2017 Ninja Kitty</label>
+  </div>
+</div>
+</body>
+</html>

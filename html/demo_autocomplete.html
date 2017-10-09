@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>JavaScript Demo: AutoComplete Form Field</title>
+  <link rel="stylesheet" type="text/css" href="https://www.jimmelanson.ca/cgi-bin/programming/examples/cgi_delivery/deliver_css.cgi?file=flexbox">
+  <link rel="stylesheet" type="text/css" href="https://www.jimmelanson.ca/cgi-bin/programming/examples/cgi_delivery/deliver_css.cgi?file=admin">
+  <script language="JavaScript" src="autocomplete.js"></script>
+  <script language="JavaScript">
+  <!-- //Romulan Cloaking Device
+
+var countries = new Array("Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antarctica", "Antigua and Barbuda", "Argentina", "Armenia", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bermuda", "Bhutan", "Bolivia", "Bosnia and Herzegovina", "Botswana", "Brazil", "Brunei", "Bulgaria", "Burkina Faso", "Burma", "Burundi", "Cambodia", "Cameroon", "Canada", "Cape Verde", "Central African Republic", "Chad", "Chile", "China", "Colombia", "Comoros", "Congo, Democratic Republic", "Congo, Republic of the", "Costa Rica", "Cote d'Ivoire", "Croatia", "Cuba", "Cyprus", "Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "East Timor", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Ethiopia", "Fiji", "Finland", "France", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Greece", "Greenland", "Grenada", "Guatemala", "Guinea", "Guinea-Bissau", "Guyana", "Haiti", "Honduras", "Hong Kong", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Israel", "Italy", "Jamaica", "Japan", "Jordan", "Kazakhstan", "Kenya", "Kiribati", "Korea, North", "Korea, South", "Kuwait", "Kyrgyzstan", "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg", "Macedonia", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands", "Mauritania", "Mauritius", "Mexico", "Micronesia", "Moldova", "Mongolia", "Morocco", "Monaco", "Mozambique", "Namibia", "Nauru", "Nepal", "Netherlands", "New Zealand", "Nicaragua", "Niger", "Nigeria", "Norway", "Oman", "Pakistan", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland", "Portugal", "Qatar", "Romania", "Russia", "Rwanda", "Samoa", "San Marino", " Sao Tome", "Saudi Arabia", "Senegal", "Serbia and Montenegro", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Solomon Islands", "Somalia", "South Africa", "Spain", "Sri Lanka", "Sudan", "Suriname", "Swaziland", "Sweden", "Switzerland", "Syria", "Taiwan", "Tajikistan", "Tanzania", "Thailand", "Togo", "Tonga", "Trinidad and Tobago", "Tunisia", "Turkey", "Turkmenistan", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States", "Uruguay", "Uzbekistan", "Vanuatu", "Venezuela", "Vietnam", "Yemen", "Zambia", "Zimbabwe");
+
+function viewCountryList() {
+  var message = 'The countries you can compare against are:\n\n';
+  for(var i=0;i<countries.length;i++) {
+    message += countries[i]+',';
+    if(i % 10 == 0) {
+      message += '\n';
+    }
+  }
+  window.alert(message);
+}
+
+//--------------------------------------
+var caseSensitive = new autocomplete();
+for(var i=0;i<countries.length;i++) {
+  caseSensitive.addWord(countries[i]);
+}
+//--------------------------------------
+
+var caseInSensitive = new autocomplete();
+caseInSensitive.ignoreCase();
+for(var i=0;i<countries.length;i++) {
+  caseInSensitive.addWord(countries[i]);
+}
+//--------------------------------------
+//One method of assigning values to an array
+var workersByName = new Array();
+workersByName[0] = 'Jim Melanson 88738';
+workersByName[1] = 'Giuseppe Verde 12345';
+workersByName[2] = 'John Black 54321';
+workersByName[3] = 'Johan Gustavson 34521';
+workersByName[4] = 'Johanne Grumbaldi 32154';
+workersByName[5] = 'Bee Sting 21345';
+workersByName[6] = 'Beatrice Connors 21435';
+workersByName[7] = 'Beatrix Potter 53421';
+
+//Another method of assigning values to an array
+var workersBySurname = new Array('Melanson, Jim 88738','Verde, Giuseppe 12345','Black, John 54321','Gustavson, Johan 34521','Grumbaldi, Johanne 32154','Sting, Bee 21345','Connors, Beatrice 21435','Potter, Beatrix 53421');
+var workersByBadge = new Array('88738 Jim Melanson','12345 Giuseppe Verde','54321 John Black','34521 Johan Gustavson','32154 Johanne Grumbaldi','21345 Bee Sting','21435 Beatrice Connors','53421 Beatrix Potter');
+
+//Now the object
+var workExample = new autocomplete();
+workExample.ignoreCase();
+workExample.addArray(workersBySurname);
+workExample.addArray(workersByName);
+workExample.addArray(workersByBadge);
+
+
+
+//--------------------------------------
+var personalList = new autocomplete();
+
+function addPersonalWord() {
+  var allowThisWord = true;
+  var compare = new Array();
+  compare = personalList.list();
+  if(compare) {
+    for(var ci=0;ci<compare.length;ci++) {
+      if(compare[ci]==document.getElementById('personalword').value) {
+        window.alert('You previously added '+document.getElementById('personalword').value+' to the list!');
+        allowThisWord = false;
+      }
+    }
+  }
+  if(allowThisWord) {
+    if(document.getElementById('personalword').value) {
+      personalList.addWord(document.getElementById('personalword').value);
+    }
+    document.getElementById('personalwordcount').innerHTML = personalList.count();
+    document.getElementById('personalword').value = '';
+    document.getElementById('personalword').focus();
+  }
+}
+
+function setCase(caseIs) {
+  if(caseIs=='sensitive') {
+    personalList.caseSensitive();
+    document.getElementById('setInsensitive').style.backgroundColor = '#FFFCAD';
+    document.getElementById('setInsensitive').style.color = '#FF0000';
+    document.getElementById('setInsensitive').value = 'InSensitive';
+    document.getElementById('setSensitive').style.backgroundColor = '#FF0000';
+    document.getElementById('setSensitive').style.color = '#FFFCAD';
+    document.getElementById('setSensitive').value = 'Sensitive*';
+  } else {
+    personalList.ignoreCase();
+    document.getElementById('setInsensitive').style.backgroundColor = '#FF0000';
+    document.getElementById('setInsensitive').style.color = '#FFFCAD';
+    document.getElementById('setInsensitive').value = 'InSensitive*';
+    document.getElementById('setSensitive').style.backgroundColor = '#FFFCAD';
+    document.getElementById('setSensitive').style.color = '#FF0000';
+    document.getElementById('setSensitive').value = 'Sensitive';
+  }
+}
+
+  //-->
+  </script>
+</head>
+<body>
+<div class="main-page">
+  <header>
+    <div class="header-container">
+      <label class="item-title">
+        JavaScript AutoComplete
+      </label>
+      <label class="item-user">
+        from Ninja Kitty
+      </label>
+    </div>
+  </header>
+  <br /><br /><br /><br /><br /><br />
+  <div class="indexpage-container1">
+    <div class="indexpage-container1-stuff">
+      <div style="width:820px;">
+        <br /><br /><br />
+
+        <div id="example1" style="display:block;position:absolute;left:340px;top:70px;height:160px;width:300px;background-color:#F5F5F5;border:ridge 3px #FF0000;">
+          <div id="example1Title" style="position:absolute;left:0px;top:0px;width:294px;font-family:tahoma,sans-serif;font-size:12pt;font-weight:bold;text-align:center;border:outset 4px #A9A9A9;background-color:#A9A9A9;color:#FFFFFF;">Example #1</div>
+          <div id="example1HTML" style="position:absolute;left:3px;top:30px;width:284px;background-color:#F5F5F5;padding:5px;margin:0px;font-family:courier new,courier,tahoma,sans-serif;font-size:9pt;">
+            <form name="example1Frm">
+            <center><b>Case Sensitive Example</b></center>
+            <br>
+            <center><input type="text" name="txt1" id="txt1" value="" size="35" maxlength="255" onkeyup="return caseSensitive.complete(this, event);"></center>
+            <br>
+            <center>[<span onClick="viewCountryList()" style="cursor:hand;">View List</span>]</center>
+            </form>
+          </div>
+        </div>
+
+        <div id="example2" style="display:block;position:absolute;left:660px;top:70px;height:160px;width:300px;background-color:#F5F5F5;border:ridge 3px #FF0000;">
+          <div id="example2Title" style="position:absolute;left:0px;top:0px;width:294px;font-family:tahoma,sans-serif;font-size:12pt;font-weight:bold;text-align:center;border:outset 4px #A9A9A9;background-color:#A9A9A9;color:#FFFFFF;">Example #2</div>
+          <div id="example2HTML" style="position:absolute;left:3px;top:30px;width:284px;background-color:#F5F5F5;padding:5px;margin:0px;font-family:courier new,courier,tahoma,sans-serif;font-size:9pt;">
+            <form name="example2Frm">
+            <center><b>Case NOT Sensitive Example</b></center>
+            <br>
+            <center><input type="text" name="txt2" id="txt2" value="" size="35" maxlength="255" onkeyup="return caseInSensitive.complete(this, event);"></center>
+            <br>
+            <center>[<span onClick="viewCountryList()" style="cursor:hand;">View List</span>]</center>
+            </form>
+          </div>
+        </div>
+
+        <div id="example3" style="display:block;position:absolute;left:340px;top:250px;height:345px;width:300px;background-color:#F5F5F5;border:ridge 3px #FF0000;">
+          <div id="example3Title" style="position:absolute;left:0px;top:0px;width:294px;font-family:tahoma,sans-serif;font-size:12pt;font-weight:bold;text-align:center;border:outset 4px #A9A9A9;background-color:#A9A9A9;color:#FFFFFF;">Example #3</div>
+          <div id="example3HTML" style="position:absolute;left:3px;top:30px;width:284px;background-color:#F5F5F5;padding:5px;margin:0px;font-family:courier new,courier,tahoma,sans-serif;font-size:9pt;">
+            <form name="example3Frm">
+            <center><b>More Complex Example</b></center>
+            <br>
+            <center><input type="text" name="txt3" id="txt3" value="" size="35" maxlength="255" onkeyup="return workExample.complete(this, event);"></center>
+            <center><b>Start typing a name or ID number</b></center>
+            <br>
+            <center>
+            <table border="0" cellspacing="0" cellpadding="5" style="font-family:tahoma,sans-serif;font-size:9pt;">
+              <tr>
+                <td align="center"><b>G1:</b></td>
+                <td align="center"><b>Surname:</b></td>
+                <td align="center"><b>ID Number:</b></td>
+              </tr>
+              <tr><td>Jim</td><td>Melanson</td><td>88738</td></tr>
+              <tr><td>John</td><td>Black</td><td>54321</td></tr>
+              <tr><td>Johan</td><td>Gustavson</td><td>34521</td></tr>
+              <tr><td>Johanne</td><td>Grumbaldi</td><td>32154</td></tr>
+              <tr><td>Bee</td><td>Sting</td><td>21345</td></tr>
+              <tr><td>Beatrice</td><td>Connors</td><td>21435</td></tr>
+              <tr><td>Beatrix</td><td>Potter</td><td>53421</td></tr>
+            </table>
+            </center>
+            </form>
+          </div>
+        </div>
+
+        <div id="example4" style="display:block;position:absolute;left:660px;top:250px;height:345px;width:300px;background-color:#F5F5F5;border:ridge 3px #FF0000;">
+          <div id="example4Title" style="position:absolute;left:0px;top:0px;width:294px;font-family:tahoma,sans-serif;font-size:12pt;font-weight:bold;text-align:center;border:outset 4px #A9A9A9;background-color:#A9A9A9;color:#FFFFFF;">Example #4</div>
+          <div id="example4HTML" style="position:absolute;left:3px;top:30px;width:284px;background-color:#F5F5F5;padding:5px;margin:0px;font-family:courier new,courier,tahoma,sans-serif;font-size:9pt;">
+            <form name="example4Frm">
+            <center><b>Make Your Own List</b></center>
+            <br>
+            <center>
+            <input type="text" name="personalword" id="personalword" value="" size="20"><input type="button" name="pwbtn" value="Add Word" onClick="addPersonalWord()">
+            <br><b>Words In List:</b> <font id="personalwordcount">0</font>
+            </center>
+            <br>
+            <center>
+              <input type="button" name="setInsensitive" id="setInsensitive" value="InSensitive" onClick="setCase('insensitive')" style="font-family:tahoma,sans-serif;font-size:10pt;font-weight:bold;color:#FF0000;background-color:#FFFCAD;border: 2px outset maroon;width:125px;">
+              <input type="button" name="setSensitive" id="setSensitive" value="Sensitive*" onClick="setCase('sensitive')" style="font-family:tahoma,sans-serif;font-size:10pt;font-weight:bold;color:#FFFCAD;background-color:#FF0000;border: 2px outset maroon;width:125px;">
+            </center>
+            <br>
+            <center><input type="text" name="txt4" id="txt4" value="" size="35" maxlength="255" onkeyup="return personalList.complete(this, event);"></center>
+            <br>
+            Add your own words to the list one at a time. Then you can try auto-completing on your own list
+            and compare setting the object to case sensitive and case-insensitive.
+            </form>
+          </div>
+        </div>
+
+        <div id="instructions" style="display:block;position:absolute;left:20px;top:70px;height:525px;width:300px;background-color:#F5F5F5;border:ridge 3px #FF0000;">
+          <div id="instructionsTitle" style="position:absolute;left:0px;top:0px;width:294px;font-family:tahoma,sans-serif;font-size:12pt;font-weight:bold;text-align:center;border:outset 4px #A9A9A9;background-color:#A9A9A9;color:#FFFFFF;">Instructions</div>
+          <div id="instructionsText" style="position:absolute;left:1px;top:30px;width:286px;height:483px;background-color:#FFFCAD;padding:5px;margin:0px;font-family:courier new,courier,tahoma,sans-serif;font-size:9pt;">
+            <center><i>Refer to the documentation<br>for complete instructions</i></center>
+            <dl>
+            <dt><b>Example #1:</b>
+            <dd>This example shows how the auto-complete (auto-suggest) works. It contains a list of 191 countries, simply start
+            typing any country name you can think of. <i>It IS case sensitive, so your first letter will have to be capitalized.</i>
+            <br><br>
+            <dt><b>Example #2:</b>
+            <dd>This text box references the same list. <i>It is NOT case sensitive, so your first letter does not HAVE to be capitalized.</i>
+            <br><br>
+            <dt><b>Example #3:</b>
+            <dd>This text box references the list of names and ID numbers below it. <i>It is NOT case sensitive.</i>
+            <br><br>
+            <dt><b>Example #4:</b>
+            <dd>Create your own list for testing.
+            <br><br>
+            </dl>
+            <center><i>View the source code for this page to see how the lists were established.</i></center>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <br /><br /><br /><br />
+  <div class="footer-container">
+      <label class="footer-normal">&copy; 2017 Ninja Kitty</label>
+  </div>
+</div>
+</body>
+</html>
